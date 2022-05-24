@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * @copyright Copyright (c) 2016, ownCloud, Inc.
  *
@@ -27,77 +30,84 @@
  */
 namespace OC\Log;
 
+use Closure;
+use Error;
 use OCP\ILogger;
+use Psr\Log\LoggerInterface;
+use Throwable;
+use function register_shutdown_function;
+use function set_error_handler;
+use function set_exception_handler;
 
 class ErrorHandler {
-	/** @var ILogger */
-	private static $logger;
+	private LoggerInterface $logger;
+
+	public function __construct(LoggerInterface $logger,
+								bool $isCli,
+								bool $debug) {
+		$this->logger = $logger;
+
+		if ($debug) {
+			set_error_handler(Closure::fromCallable([$this, 'onAll']), E_ALL);
+			if ($isCli) {
+				set_exception_handler(Closure::fromCallable(['OC_Template', 'printExceptionErrorPage']));
+			}
+		} else {
+			set_error_handler(Closure::fromCallable([$this, 'onError']));
+		}
+		register_shutdown_function(Closure::fromCallable([$this, 'onShutdown']));
+		set_exception_handler(Closure::fromCallable([$this, 'onException']));
+	}
 
 	/**
-	 * remove password in URLs
-	 * @param string $msg
-	 * @return string
+	 * Remove password in URLs
 	 */
-	protected static function removePassword($msg) {
+	private static function removePassword(string $msg): string {
 		return preg_replace('#//(.*):(.*)@#', '//xxx:xxx@', $msg);
 	}
 
-	public static function register($debug = false) {
-		$handler = new ErrorHandler();
-
-		if ($debug) {
-			set_error_handler([$handler, 'onAll'], E_ALL);
-			if (\OC::$CLI) {
-				set_exception_handler(['OC_Template', 'printExceptionErrorPage']);
-			}
-		} else {
-			set_error_handler([$handler, 'onError']);
-		}
-		register_shutdown_function([$handler, 'onShutdown']);
-		set_exception_handler([$handler, 'onException']);
-	}
-
-	public static function setLogger(ILogger $logger) {
-		self::$logger = $logger;
-	}
-
-	//Fatal errors handler
-	public static function onShutdown() {
+	/**
+	 * Fatal errors handler
+	 */
+	private function onShutdown(): void {
 		$error = error_get_last();
-		if ($error && self::$logger) {
-			//ob_end_clean();
+		if ($error) {
 			$msg = $error['message'] . ' at ' . $error['file'] . '#' . $error['line'];
-			self::$logger->critical(self::removePassword($msg), ['app' => 'PHP']);
+			$this->logger->critical(self::removePassword($msg), ['app' => 'PHP']);
 		}
 	}
 
 	/**
-	 * 	Uncaught exception handler
-	 *
-	 * @param \Exception $exception
+	 * Uncaught exception handler
 	 */
-	public static function onException($exception) {
+	private function onException(Throwable $exception): void {
 		$class = get_class($exception);
 		$msg = $exception->getMessage();
 		$msg = "$class: $msg at " . $exception->getFile() . '#' . $exception->getLine();
-		self::$logger->critical(self::removePassword($msg), ['app' => 'PHP']);
+		$this->logger->critical(self::removePassword($msg), ['app' => 'PHP']);
 	}
 
-	//Recoverable errors handler
-	public static function onError($number, $message, $file, $line) {
+	/**
+	 * Recoverable errors handler
+	 */
+	private function onError(int $number, string $message, string $file, int $line): bool {
 		if (!(error_reporting() & $number)) {
-			return;
+			return true;
 		}
 		$msg = $message . ' at ' . $file . '#' . $line;
-		$e = new \Error(self::removePassword($msg));
-		self::$logger->logException($e, ['app' => 'PHP', 'level' => self::errnoToLogLevel($number)]);
+		$e = new Error(self::removePassword($msg));
+		$this->logger->log(self::errnoToLogLevel($number), $e->getMessage(), ['app' => 'PHP']);
+		return true;
 	}
 
-	//Recoverable handler which catch all errors, warnings and notices
-	public static function onAll($number, $message, $file, $line) {
+	/**
+	 * Recoverable handler which catch all errors, warnings and notices
+	 */
+	private function onAll(int $number, string $message, string $file, int $line): bool {
 		$msg = $message . ' at ' . $file . '#' . $line;
-		$e = new \Error(self::removePassword($msg));
-		self::$logger->logException($e, ['app' => 'PHP', 'level' => self::errnoToLogLevel($number)]);
+		$e = new Error(self::removePassword($msg));
+		$this->logger->log(self::errnoToLogLevel($number), $e->getMessage(), ['app' => 'PHP']);
+		return true;
 	}
 
 	public static function errnoToLogLevel(int $errno): int {

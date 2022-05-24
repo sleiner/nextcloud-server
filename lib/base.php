@@ -637,9 +637,11 @@ class OC {
 
 		$config = \OC::$server->get(\OCP\IConfig::class);
 		if (!defined('PHPUNIT_RUN')) {
-			OC\Log\ErrorHandler::setLogger(\OC::$server->getLogger());
-			$debug = $config->getSystemValue('debug', false);
-			OC\Log\ErrorHandler::register($debug);
+			new OC\Log\ErrorHandler(
+				\OCP\Server::get(\Psr\Log\LoggerInterface::class),
+				\OC::$CLI,
+				$config->getSystemValue('debug', false),
+			);
 		}
 
 		/** @var \OC\AppFramework\Bootstrap\Coordinator $bootstrapCoordinator */
