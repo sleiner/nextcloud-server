@@ -115,6 +115,7 @@ class ErrorHandler {
 			case E_USER_WARNING:
 				return ILogger::WARN;
 
+			case E_DEPRECATED:
 			case E_USER_DEPRECATED:
 				return ILogger::DEBUG;
 
