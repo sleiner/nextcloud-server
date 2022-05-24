@@ -51,15 +51,15 @@ class UserManagement extends Action implements IEventListener {
 	public function handle(Event $event): void {
 		if ($event instanceof UserCreatedEvent) {
 			$this->create($event->getUser()->getUID());
-		} else if ($event instanceof UserDeletedEvent) {
+		} elseif ($event instanceof UserDeletedEvent) {
 			$this->delete($event->getUser()->getUID());
-		} else if ($event instanceof UserChangedEvent) {
+		} elseif ($event instanceof UserChangedEvent) {
 			$this->change($event);
-		} else if ($event instanceof UserIdAssignedEvent) {
+		} elseif ($event instanceof UserIdAssignedEvent) {
 			$this->assign($event->getUserId());
-		} else if ($event instanceof UserIdUnassignedEvent) {
+		} elseif ($event instanceof UserIdUnassignedEvent) {
 			$this->unassign($event->getUserId());
-		} else if ($event instanceof PasswordUpdatedEvent) {
+		} elseif ($event instanceof PasswordUpdatedEvent) {
 			$this->setPassword($event->getUser());
 		}
 	}

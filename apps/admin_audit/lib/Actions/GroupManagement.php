@@ -47,11 +47,11 @@ class GroupManagement extends Action implements IEventListener {
 	public function handle(Event $event): void {
 		if ($event instanceof UserAddedEvent) {
 			$this->addUser($event->getGroup(), $event->getUser());
-		} else if ($event instanceof UserRemovedEvent) {
+		} elseif ($event instanceof UserRemovedEvent) {
 			$this->removeUser($event->getGroup(), $event->getUser());
-		} else if ($event instanceof GroupCreatedEvent) {
+		} elseif ($event instanceof GroupCreatedEvent) {
 			$this->createGroup($event->getGroup());
-		} else if ($event instanceof GroupDeletedEvent) {
+		} elseif ($event instanceof GroupDeletedEvent) {
 			$this->deleteGroup($event->getGroup());
 		}
 	}
