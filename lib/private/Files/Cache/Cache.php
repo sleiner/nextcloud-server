@@ -189,7 +189,7 @@ class Cache implements ICache {
 		$data['fileid'] = (int)$data['fileid'];
 		$data['parent'] = (int)$data['parent'];
 		$data['size'] = 0 + $data['size'];
-		$data['unencrypted_size'] = 0 + $data['unencrypted_size'];
+		$data['unencrypted_size'] = 0 + ($data['unencrypted_size'] ?? 0);
 		$data['mtime'] = (int)$data['mtime'];
 		$data['storage_mtime'] = (int)$data['storage_mtime'];
 		$data['encryptedVersion'] = (int)$data['encrypted'];
