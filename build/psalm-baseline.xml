@@ -97,17 +97,6 @@
       <code>$baseuri</code>
     </UndefinedGlobalVariable>
   </file>
-  <file src="apps/dav/bin/chunkperf.php">
-    <InvalidOperand occurrences="1">
-      <code>$argv[5]</code>
-    </InvalidOperand>
-    <InvalidScalarArgument occurrences="1">
-      <code>$chunkSize</code>
-    </InvalidScalarArgument>
-    <MissingFile occurrences="1">
-      <code>require '../../../../3rdparty/autoload.php'</code>
-    </MissingFile>
-  </file>
   <file src="apps/dav/lib/AppInfo/Application.php">
     <InvalidArgument occurrences="1"/>
     <UndefinedInterfaceMethod occurrences="1">
@@ -482,11 +471,6 @@
     <UndefinedInterfaceMethod occurrences="1">
       <code>tryTokenLogin</code>
     </UndefinedInterfaceMethod>
-  </file>
-  <file src="apps/dav/lib/Connector/Sabre/CommentPropertiesPlugin.php">
-    <InvalidScalarArgument occurrences="1">
-      <code>$node-&gt;getId()</code>
-    </InvalidScalarArgument>
   </file>
   <file src="apps/dav/lib/Connector/Sabre/Directory.php">
     <InvalidPropertyAssignmentValue occurrences="1">
@@ -1694,11 +1678,6 @@
     <UndefinedInterfaceMethod occurrences="1">
       <code>isReady</code>
     </UndefinedInterfaceMethod>
-  </file>
-  <file src="apps/settings/lib/Settings/Admin/Server.php">
-    <InvalidArgument occurrences="1">
-      <code>false</code>
-    </InvalidArgument>
   </file>
   <file src="apps/settings/lib/Settings/Admin/Sharing.php">
     <InvalidScalarArgument occurrences="1">
@@ -3735,9 +3714,6 @@
     <MismatchingDocblockParamType occurrences="1">
       <code>ISimpleFile</code>
     </MismatchingDocblockParamType>
-    <NullableReturnStatement occurrences="1">
-      <code>$preview</code>
-    </NullableReturnStatement>
     <TooManyArguments occurrences="1">
       <code>dispatch</code>
     </TooManyArguments>
@@ -3926,29 +3902,6 @@
       <code>$this-&gt;dbprettyname</code>
       <code>$this-&gt;dbprettyname</code>
     </UndefinedThisPropertyFetch>
-  </file>
-  <file src="lib/private/Setup/MySQL.php">
-    <InvalidReturnType occurrences="1">
-      <code>array</code>
-    </InvalidReturnType>
-    <ParamNameMismatch occurrences="1">
-      <code>$username</code>
-    </ParamNameMismatch>
-  </file>
-  <file src="lib/private/Setup/OCI.php">
-    <ParamNameMismatch occurrences="1">
-      <code>$username</code>
-    </ParamNameMismatch>
-  </file>
-  <file src="lib/private/Setup/PostgreSQL.php">
-    <ParamNameMismatch occurrences="1">
-      <code>$username</code>
-    </ParamNameMismatch>
-  </file>
-  <file src="lib/private/Setup/Sqlite.php">
-    <ParamNameMismatch occurrences="1">
-      <code>$username</code>
-    </ParamNameMismatch>
   </file>
   <file src="lib/private/Share/Share.php">
     <FalsableReturnStatement occurrences="1">
@@ -4199,28 +4152,11 @@
     <FalsableReturnStatement occurrences="1">
       <code>false</code>
     </FalsableReturnStatement>
-    <ImplicitToStringCast occurrences="1">
-      <code>$query-&gt;func()-&gt;lower('displayname')</code>
-    </ImplicitToStringCast>
   </file>
   <file src="lib/private/User/Manager.php">
-    <ImplementedReturnTypeMismatch occurrences="1">
-      <code>array|int</code>
-    </ImplementedReturnTypeMismatch>
-    <InvalidArgument occurrences="1">
-      <code>$callback</code>
-    </InvalidArgument>
-    <InvalidNullableReturnType occurrences="1">
-      <code>bool|IUser</code>
-    </InvalidNullableReturnType>
-    <NullableReturnStatement occurrences="2">
-      <code>$this-&gt;createUserFromBackend($uid, $password, $backend)</code>
-      <code>$this-&gt;createUserFromBackend($uid, $password, $backend)</code>
-    </NullableReturnStatement>
-    <UndefinedInterfaceMethod occurrences="5">
-      <code>checkPassword</code>
-      <code>checkPassword</code>
-      <code>countUsers</code>
+    <ImplementedReturnTypeMismatch occurrences="1"/>
+    <InvalidArgument occurrences="1"/>
+    <UndefinedInterfaceMethod occurrences="2">
       <code>createUser</code>
       <code>getUsersForUserValueCaseInsensitive</code>
     </UndefinedInterfaceMethod>
@@ -4232,23 +4168,13 @@
     <InvalidArgument occurrences="1">
       <code>IUser::class . '::firstLogin'</code>
     </InvalidArgument>
-    <InvalidScalarArgument occurrences="2">
-      <code>$this-&gt;timeFactory-&gt;getTime()</code>
-      <code>$this-&gt;timeFactory-&gt;getTime()</code>
-    </InvalidScalarArgument>
     <NoInterfaceProperties occurrences="2">
       <code>$request-&gt;server</code>
       <code>$request-&gt;server</code>
     </NoInterfaceProperties>
-    <NullableReturnStatement occurrences="1">
-      <code>null</code>
-    </NullableReturnStatement>
     <TooManyArguments occurrences="1">
       <code>dispatch</code>
     </TooManyArguments>
-    <UndefinedMethod occurrences="1">
-      <code>getByEmail</code>
-    </UndefinedMethod>
   </file>
   <file src="lib/private/User/User.php">
     <InvalidArgument occurrences="5">
@@ -4258,22 +4184,6 @@
       <code>IUser::class . '::preDelete'</code>
       <code>IUser::class . '::preSetPassword'</code>
     </InvalidArgument>
-    <InvalidNullableReturnType occurrences="1">
-      <code>getBackend</code>
-    </InvalidNullableReturnType>
-    <InvalidReturnStatement occurrences="1">
-      <code>$image</code>
-    </InvalidReturnStatement>
-    <InvalidReturnType occurrences="1">
-      <code>IImage|null</code>
-    </InvalidReturnType>
-    <InvalidScalarArgument occurrences="2">
-      <code>$quota</code>
-      <code>$this-&gt;lastLogin</code>
-    </InvalidScalarArgument>
-    <NullableReturnStatement occurrences="1">
-      <code>$this-&gt;backend</code>
-    </NullableReturnStatement>
     <TooManyArguments occurrences="5">
       <code>dispatch</code>
       <code>dispatch</code>
@@ -4281,13 +4191,6 @@
       <code>dispatch</code>
       <code>dispatch</code>
     </TooManyArguments>
-    <UndefinedInterfaceMethod occurrences="5">
-      <code>canChangeAvatar</code>
-      <code>deleteUserAvatar</code>
-      <code>getHome</code>
-      <code>setDisplayName</code>
-      <code>setPassword</code>
-    </UndefinedInterfaceMethod>
   </file>
   <file src="lib/private/legacy/OC_API.php">
     <InvalidNullableReturnType occurrences="1">
@@ -4467,11 +4370,6 @@
       <code>ContainerExceptionInterface</code>
       <code>ContainerExceptionInterface</code>
     </InvalidThrow>
-  </file>
-  <file src="lib/public/IDBConnection.php">
-    <InvalidClass occurrences="1">
-      <code>PreconditionNotMetException</code>
-    </InvalidClass>
   </file>
   <file src="remote.php">
     <InvalidScalarArgument occurrences="1">
